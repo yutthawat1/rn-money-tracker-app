@@ -145,7 +145,7 @@ export default function IncomeScreen({ navigation }: any) {
 
 export const formStyles = StyleSheet.create({
   container: { flex: 1,
-     backgroundColor: '#F8F9FA' 
+     backgroundColor: '#F8F9FA',
     },
   topHeader: { backgroundColor: '#1E7569', padding: 20, alignItems: 'center' },
   headerText: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
@@ -216,5 +216,5 @@ export const formStyles = StyleSheet.create({
   subBox: { flex: 1, alignItems: 'center' },
   iconLabel: { flexDirection: 'row', alignItems: 'center' },
   subLabel: { color: '#E0F2F1', fontSize: 12 },
-  subAmount: { color: '#FFF', fontSize: 16, fontWeight: 'bold', marginTop: 4 },
+  subAmount: { color: '#FFF', fontSize: 16, fontWeight: 'bold', marginTop: 4 }
 });

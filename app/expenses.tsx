@@ -2,7 +2,7 @@ import { supabase, transactionService } from "@/services/supabase";
 import { Ionicons } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
 import { router } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { formStyles } from './income'; // รียูส Style ร่วมกันได้เพื่อความสะอาดของโค้ด
 
