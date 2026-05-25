@@ -18,7 +18,7 @@
 <img width="186" height="415" alt="image" src="https://github.com/user-attachments/assets/cad41e02-7fbe-4ad9-bd10-60c5a2078b59" />
 
 
-<p>หน้ารายจ่าย (expesses)</p>
+<p>หน้ารายจ่าย (expenses)</p>
 <img width="189" height="415" alt="image" src="https://github.com/user-attachments/assets/8b40a3e9-811f-4ac1-b230-843e6c1eced6" />
 
 
