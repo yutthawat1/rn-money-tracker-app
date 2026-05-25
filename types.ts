@@ -4,4 +4,5 @@ export type transaction = {
     amount: number;
     created_at: string;
     type: string;
+    date: string;
 };

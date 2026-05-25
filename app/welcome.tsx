@@ -1,41 +1,42 @@
-import { router } from 'expo-router'
-import React from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { router } from 'expo-router';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default function Welcome() {
+
+export default function WelcomeScreen({ navigation }: any) {
+  
+const handleStart = () => {
+    router.push("/home");
+  };
+
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-
-      {/* รูป */}
-      <Image source={require('../assets/images/logo.png')} style={styles.image}/>
-
-      {/* ข้อความ */}
-      <View style={styles.header}>
-        <Text>บันทึกราย</Text>
-        <Text>รับ-รายจ่าย</Text>
+    <View style={styles.container}>
+      <View style={styles.content}>
+        {/* แสดงภาพคาแรคเตอร์ตาม Group 1.png */}
+        <Image 
+          source={require('@/assets/images/logo.png')} 
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <Text style={styles.title}>Money Tracking</Text>
+        <Text style={styles.subtitle}>แอปพลิเคชันบันทึกรายรับ - รายจ่าย</Text>
       </View>
-      {/* ปุ่ม  */}
-      <TouchableOpacity style={styles.button} onPress={() => {router.replace("/home")}}> 
-        <Text>Next</Text>
-      </TouchableOpacity>
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.button} onPress={handleStart}>
+          <Text style={styles.buttonText}>บันทึก รายรับ/รายจ่าย</Text>
+        </TouchableOpacity>
+      </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-  image: {
-    width: 350,
-    marginBottom: 20
-  },
-  header: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    marginBottom: 20
-  },
-  button: {
-    backgroundColor: 'blue',
-    color: 'white',
-    padding: 10,
-    borderRadius: 5
-  }
-})
+  container: { flex: 1, backgroundColor: '#349c8e' },
+  content: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20,},
+  image: { width: 280, height: 280, marginBottom: 30 },
+  title: { fontSize: 32, fontWeight: 'bold', color: '#FFF', marginBottom: 10 },
+  subtitle: { fontSize: 18, color: '#E0F2F1', textAlign: 'center' },
+  footer: { padding: 20, paddingBottom: 40 },
+  button: { backgroundColor: '#FFF', paddingVertical: 16, borderRadius: 25, alignItems: 'center', },
+  buttonText: { color: '#1E7569', fontSize: 18, fontWeight: 'bold' },
+});
