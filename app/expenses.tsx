@@ -1,4 +1,4 @@
-import { supabase } from '@/services/supabase';
+import { supabase, transactionService } from "@/services/supabase";
 import { Ionicons } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
 import { router } from 'expo-router';
@@ -10,6 +10,7 @@ import { formStyles } from './income'; // รียูส Style ร่วมก�
 export default function ExpensesScreen({ navigation }: any) {
 
   const isFocused = useIsFocused();
+   const [currentDateText, setCurrentDateText] = useState("");
     const [loading, setLoading] = useState(true);
     const [transactions, setTransactions] = useState<any[]>([]);
     const [summary, setSummary] = useState({ balance: 0, income: 0, expense: 0 });
@@ -41,6 +42,31 @@ export default function ExpensesScreen({ navigation }: any) {
   
   const [detail, setDetail] = useState('');
   const [amount, setAmount] = useState('');
+  const fetchSummary = useCallback(async () => {
+      const data = await transactionService.getSummary();
+      if (data) setSummary(data);
+    }, []);
+    useEffect(() => {
+      const months = [
+        "มกราคม",
+        "กุมภาพันธ์",
+        "มีนาคม",
+        "เมษายน",
+        "พฤษภาคม",
+        "มิถุนายน",
+        "กรกฎาคม",
+        "สิงหาคม",
+        "กันยายน",
+        "ตุลาคม",
+        "พฤศจิกายน",
+        "ธันวาคม",
+      ];
+      const now = new Date();
+      setCurrentDateText(
+        `วันที่ ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear() + 543}`,
+      );
+      fetchSummary();
+    }, [fetchSummary]);
 
   const handleStart = () => {
     router.push("/home");
@@ -99,7 +125,7 @@ export default function ExpensesScreen({ navigation }: any) {
       </View>
       {/* <View style={formStyles.topHeader}><Text style={formStyles.headerText}>บันทึกเงินออก</Text></View> */}
       <View style={formStyles.body}>
-        <Text style={formStyles.dateText}>วันที่ 1 มกราคม 2568</Text>
+        <Text style={formStyles.dateText}>{currentDateText}</Text>
         <Text style={formStyles.sectionType}>เงินออก</Text>
 
         <View style={formStyles.inputContainer}>

@@ -1,12 +1,13 @@
-import { supabase } from "@/services/supabase";
+import { supabase, transactionService } from "@/services/supabase";
 import { Ionicons } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
 import { router } from "expo-router";
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 export default function IncomeScreen({ navigation }: any) {
 
-    const isFocused = useIsFocused();
+      const isFocused = useIsFocused();
+      const [currentDateText, setCurrentDateText] = useState("");
       const [loading, setLoading] = useState(true);
       const [transactions, setTransactions] = useState<any[]>([]);
       const [summary, setSummary] = useState({ balance: 0, income: 0, expense: 0 });
@@ -39,6 +40,31 @@ export default function IncomeScreen({ navigation }: any) {
   const [detail, setDetail] = useState('');
   const [amount, setAmount] = useState('');
 
+  const fetchSummary = useCallback(async () => {
+    const data = await transactionService.getSummary();
+    if (data) setSummary(data);
+  }, []);
+  useEffect(() => {
+    const months = [
+      "มกราคม",
+      "กุมภาพันธ์",
+      "มีนาคม",
+      "เมษายน",
+      "พฤษภาคม",
+      "มิถุนายน",
+      "กรกฎาคม",
+      "สิงหาคม",
+      "กันยายน",
+      "ตุลาคม",
+      "พฤศจิกายน",
+      "ธันวาคม",
+    ];
+    const now = new Date();
+    setCurrentDateText(
+      `วันที่ ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear() + 543}`,
+    );
+    fetchSummary();
+  }, [fetchSummary]);
   const handleStart = () => {
     router.push("/home");
   };
@@ -96,7 +122,7 @@ export default function IncomeScreen({ navigation }: any) {
       </View>
       {/* <View style={formStyles.topHeader}><View><Text style={formStyles.headerText}>บันทึกเงินเข้า</Text></View></View> */}
       <View style={formStyles.body}>
-        <Text style={formStyles.dateText}>วันที่ 1 มกราคม 2568</Text> 
+        <Text style={formStyles.dateText}>{currentDateText}</Text> 
         <Text style={formStyles.sectionType}>เงินเข้า</Text>
 
         <View style={formStyles.inputContainer}>
@@ -126,7 +152,10 @@ export const formStyles = StyleSheet.create({
   body: { flex: 1, padding: 24, 
     // backgroundColor: '#FFF', 
     marginTop: 30},
-  dateText: { fontSize: 28, fontWeight: 'bold', color: '#222', textAlign: 'center', marginTop: 10 },
+  dateText: { fontFamily: "Kanit_700Bold",
+    fontSize: 28,
+    color: "#2D3748",
+    textAlign: "center", },
   sectionType: { fontSize: 18, fontWeight: 'bold', color: '#555', textAlign: 'center', marginVertical: 15 },
   inputContainer: { marginBottom: 20, borderWidth: 1.5, borderColor: '#1E7569', borderRadius: 12, paddingHorizontal: 16, paddingVertical: 8, position: 'relative' },
   inputLabel: { position: 'absolute', top: -10, left: 12, backgroundColor: '#F8F9FA', paddingHorizontal: 6, fontSize: 12, color: '#1E7569', fontWeight: '500' },
